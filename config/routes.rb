@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get "content/silver"
   get "content/gold"
   get "content/platinum"
-  mount Payola::Engine => '/payola', as: :payola
+  mount VGS::Engine => '/vgs', as: :vgs
   root to: 'visitors#index'
   get 'products/:id', to: 'products#show', :as => :products
   devise_for :users, :controllers => { :registrations => 'registrations' }

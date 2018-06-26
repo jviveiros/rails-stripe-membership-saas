@@ -1,8 +1,8 @@
 class Plan < ActiveRecord::Base
-  include Payola::Plan
+  include VGS::Plan
 
   has_many :users
-  validates :stripe_id, inclusion: { in: Plan.pluck('DISTINCT stripe_id'),
+  validates :vgs_id, inclusion: { in: Plan.pluck('DISTINCT vgs_id'),
       message: "not a valid subscription plan" }
 
   def redirect_path(subscription)
