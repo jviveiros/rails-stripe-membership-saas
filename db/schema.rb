@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20150408023212) do
 
-  create_table "payola_affiliates", force: :cascade do |t|
+  create_table "vgs_affiliates", force: :cascade do |t|
     t.string   "code"
     t.string   "email"
     t.integer  "percent"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.datetime "updated_at"
   end
 
-  create_table "payola_coupons", force: :cascade do |t|
+  create_table "vgs_coupons", force: :cascade do |t|
     t.string   "code"
     t.integer  "percent_off"
     t.datetime "created_at"
@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.boolean  "active",      default: true
   end
 
-  create_table "payola_sales", force: :cascade do |t|
+  create_table "vgs_sales", force: :cascade do |t|
     t.string   "email"
     t.string   "guid"
     t.integer  "product_id"
@@ -37,9 +37,7 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "state"
-    t.string   "stripe_id"
-    t.string   "stripe_token"
-    t.string   "card_last4"
+    t.string   "card_number"
     t.date     "card_expiration"
     t.string   "card_type"
     t.text     "error"
@@ -51,34 +49,33 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.integer  "affiliate_id"
     t.text     "customer_address"
     t.text     "business_address"
-    t.string   "stripe_customer_id"
     t.string   "currency"
     t.text     "signed_custom_fields"
     t.integer  "owner_id"
     t.string   "owner_type"
   end
 
-  add_index "payola_sales", ["coupon_id"], name: "index_payola_sales_on_coupon_id"
-  add_index "payola_sales", ["email"], name: "index_payola_sales_on_email"
-  add_index "payola_sales", ["guid"], name: "index_payola_sales_on_guid"
-  add_index "payola_sales", ["owner_id", "owner_type"], name: "index_payola_sales_on_owner_id_and_owner_type"
-  add_index "payola_sales", ["product_id", "product_type"], name: "index_payola_sales_on_product"
-  add_index "payola_sales", ["stripe_customer_id"], name: "index_payola_sales_on_stripe_customer_id"
+  add_index "vgs_sales", ["coupon_id"], name: "index_vgs_sales_on_coupon_id"
+  add_index "vgs_sales", ["email"], name: "index_vgs_sales_on_email"
+  add_index "vgs_sales", ["guid"], name: "index_vgs_sales_on_guid"
+  add_index "vgs_sales", ["owner_id", "owner_type"], name: "index_vgs_sales_on_owner_id_and_owner_type"
+  add_index "vgs_sales", ["product_id", "product_type"], name: "index_vgs_sales_on_product"
+  add_index "vgs_sales", ["vgs_customer_id"], name: "index_vgs_sales_on_vgs_customer_id"
 
-  create_table "payola_stripe_webhooks", force: :cascade do |t|
-    t.string   "stripe_id"
+  create_table "vgs_webhooks", force: :cascade do |t|
+    t.string   "vgs_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "payola_subscriptions", force: :cascade do |t|
+  create_table "vgs_subscriptions", force: :cascade do |t|
     t.string   "plan_type"
     t.integer  "plan_id"
     t.datetime "start"
     t.string   "status"
     t.string   "owner_type"
     t.integer  "owner_id"
-    t.string   "stripe_customer_id"
+    t.string   "vgs_customer_id"
     t.boolean  "cancel_at_period_end"
     t.datetime "current_period_start"
     t.datetime "current_period_end"
@@ -87,8 +84,7 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.datetime "trial_end"
     t.datetime "canceled_at"
     t.integer  "quantity"
-    t.string   "stripe_id"
-    t.string   "stripe_token"
+    t.string   "vgs_id"
     t.string   "card_last4"
     t.date     "card_expiration"
     t.string   "card_type"
@@ -100,7 +96,6 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.string   "currency"
     t.integer  "amount"
     t.string   "guid"
-    t.string   "stripe_status"
     t.integer  "affiliate_id"
     t.string   "coupon"
     t.text     "signed_custom_fields"
@@ -109,11 +104,10 @@ ActiveRecord::Schema.define(version: 20150408023212) do
     t.integer  "setup_fee"
   end
 
-  add_index "payola_subscriptions", ["guid"], name: "index_payola_subscriptions_on_guid"
+  add_index "vgs_subscriptions", ["guid"], name: "index_vgs_subscriptions_on_guid"
 
   create_table "plans", force: :cascade do |t|
     t.string   "name"
-    t.string   "stripe_id"
     t.string   "interval"
     t.integer  "amount"
     t.datetime "created_at", null: false

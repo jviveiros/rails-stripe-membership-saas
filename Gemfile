@@ -18,7 +18,6 @@ gem 'bootstrap-sass'
 gem 'devise'
 gem 'gibbon'
 gem 'high_voltage'
-gem 'payola-payments'
 gem 'sucker_punch'
 group :development do
   gem 'better_errors'
@@ -30,7 +29,6 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'rspec-rails'
-  gem 'stripe-ruby-mock', '~> 2.1.1', :require => 'stripe_mock'
 end
 group :test do
   gem 'capybara'
